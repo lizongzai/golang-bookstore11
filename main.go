@@ -3,7 +3,6 @@ package main
 import (
 	"bookstore/dao/mysql"
 	"bookstore/router"
-	"fmt"
 )
 
 func main() {
@@ -16,7 +15,5 @@ func main() {
 
 	// 3.启动服务
 	r.Run(":8080")
-
-	fmt.Println("http://localhost:8080")
 
 }
