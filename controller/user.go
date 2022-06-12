@@ -9,7 +9,6 @@ import (
 	"github.com/google/uuid"
 )
 
-// 用户注册
 func RegisterHandler(c *gin.Context) {
 	user := new(model.User)
 	if err := c.ShouldBind(user); err != nil {
@@ -21,7 +20,6 @@ func RegisterHandler(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"msg": "success"})
 }
 
-// 用户登录
 func LoginHandler(c *gin.Context) {
 	user := new(model.User)
 	if err := c.ShouldBind(user); err != nil {
@@ -31,7 +29,7 @@ func LoginHandler(c *gin.Context) {
 
 	u := model.User{Name: user.Name, Password: user.Password}
 	if row := mysql.DB.Where(&u).First(&u).Row(); row == nil {
-		c.JSON(http.StatusBadRequest, gin.H{"errMsg": "The user and passowrd do not exist"})
+		c.JSON(http.StatusBadRequest, gin.H{"errMsg": "The user and password do not exist"})
 		return
 	}
 

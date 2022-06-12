@@ -9,7 +9,14 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// 书籍入库
+/*
+	http://localhost:8080/api/v1/book
+{
+    "name": "the Hobbit 2",
+    "author": "JJR Tolkien"
+}
+*/
+
 func CreateBookHandler(c *gin.Context) {
 	book := new(model.Book)
 	if err := c.ShouldBind(book); err != nil {
@@ -17,18 +24,22 @@ func CreateBookHandler(c *gin.Context) {
 		return
 	}
 
-	mysql.DB.Create(book)
+	mysql.DB.Create(&book)
 	c.JSON(http.StatusOK, gin.H{"msg": "success"})
 }
 
-// 查询所有记录
+/*
+	http://localhost:8080/api/v1/book
+*/
 func GetAllBookHandler(c *gin.Context) {
 	book := []model.Book{}
 	mysql.DB.Find(&book)
 	c.JSON(http.StatusOK, gin.H{"book": book})
 }
 
-// 查询单个记录
+/*
+	http://localhost:8080/api/v1/book/3/
+*/
 func GetBookDetailHandler(c *gin.Context) {
 	bookId := c.Param("id")
 	bookIds, _ := strconv.ParseInt(bookId, 0, 0)
@@ -37,7 +48,14 @@ func GetBookDetailHandler(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"book": book})
 }
 
-// 修改书籍记录
+/*
+	http://localhost:8080/api/v1/book
+{
+    "id": 5,
+    "name": "the Hobbit III",
+    "author": "JJR Tolkien"
+}
+*/
 func UpdateBookDetailHandler(c *gin.Context) {
 	book := new(model.Book)
 	if err := c.ShouldBind(book); err != nil {
@@ -59,7 +77,9 @@ func UpdateBookDetailHandler(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"book": book})
 }
 
-// 删除书籍记录
+/*
+	http://localhost:8080/api/v1/book/4/
+*/
 func DeleteBookHandler(c *gin.Context) {
 	bookId := c.Param("id")
 	bookIds, _ := strconv.ParseInt(bookId, 0, 0)
