@@ -7,13 +7,13 @@ import (
 
 func main() {
 
-	// 1.连接数据库
+	// 1.Connect Database
 	mysql.InitMysql()
 
-	// 2.路由分发
+	// 2.Routing distribution
 	r := router.InitRouter()
 
-	// 3.启动服务
+	// 3.start service
 	r.Run(":8080")
 
 }
